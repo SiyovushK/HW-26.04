@@ -1,0 +1,38 @@
+@page
+@model RazorPages.Pages.Tables.Get
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Number</th>
+        <th scope="col">Seats</th>
+        <th scope="col">IsReserved</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        var count = 1;
+    }
+    @foreach (var table in Model.getTableDTO)
+    {
+        <tr>
+            <th scope="row">@(count++)</th>
+            <td>@table.Number</td>
+            <td>@table.Seats</td>
+            <td>@(table.IsReserved ? "Taken" : "Free")</td>
+            <td>
+                @if (!table.IsReserved)
+                {
+                    <a href="/Reservations/Create/@table.Id" class="btn btn-primary">Make a reservation</a>
+                }
+                else
+                {
+                    <span>Reservation unavaliable</span>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

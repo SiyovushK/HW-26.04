@@ -1,0 +1,24 @@
+@page "{tableId:int}"
+@model RazorPages.Pages.Reservations.Create
+
+<form method="post">
+    <div class="form-group">
+        <label for="exampleInputFirst1">TableId</Table></label>
+        <input asp-for="reservation.TableId" type="text" class="form-control" id="exampleInputFirst1" placeholder="TableId">
+        <span asp-validation-for="reservation.TableId"></span>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputLast1">CustomerId</label>
+        <input asp-for="reservation.CustomerId" type="text" class="form-control" id="exampleInputLast1" placeholder="CustomerId">
+        <span asp-validation-for="reservation.CustomerId"></span>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div style="text-align: center">
+    @foreach(var message in Model.Messages)
+    {
+        <p>@message</p>
+    }
+</div>

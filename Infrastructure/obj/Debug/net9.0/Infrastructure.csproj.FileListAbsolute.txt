@@ -13,3 +13,4 @@ C:\Users\-\Desktop\HW 26.04\Infrastructure\obj\Debug\net9.0\Infrastructure.dll
 C:\Users\-\Desktop\HW 26.04\Infrastructure\obj\Debug\net9.0\refint\Infrastructure.dll
 C:\Users\-\Desktop\HW 26.04\Infrastructure\obj\Debug\net9.0\Infrastructure.pdb
 C:\Users\-\Desktop\HW 26.04\Infrastructure\obj\Debug\net9.0\ref\Infrastructure.dll
+C:\Users\-\Desktop\HW 26.04\Infrastructure\obj\Debug\net9.0\Infrastructure.sourcelink.json

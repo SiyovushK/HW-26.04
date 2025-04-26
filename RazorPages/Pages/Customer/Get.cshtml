@@ -1,0 +1,25 @@
+@page
+@model RazorPages.Pages.Customer.Get
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Fullname</th>
+        <th scope="col">Phone</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        var count = 1;
+    }
+    @foreach (var customer in Model.getCustomer)
+    {
+        <tr>
+            <th scope="row">@(count++)</th>
+            <td>@customer.FullName</td>
+            <td>@customer.Phone</td>
+        </tr>
+    }
+    </tbody>
+</table>
