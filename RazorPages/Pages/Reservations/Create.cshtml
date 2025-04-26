@@ -3,14 +3,19 @@
 
 <form method="post">
     <div class="form-group">
-        <label for="exampleInputFirst1">TableId</Table></label>
-        <input asp-for="reservation.TableId" type="text" class="form-control" id="exampleInputFirst1" placeholder="TableId">
+        <label for="exampleInputFirst1">TableId</label>
+        <input asp-for="reservation.TableId" type="text" class="form-control" id="exampleInputFirst1" readonly>
         <span asp-validation-for="reservation.TableId"></span>
     </div>
     <div class="form-group">
         <label for="exampleInputLast1">CustomerId</label>
         <input asp-for="reservation.CustomerId" type="text" class="form-control" id="exampleInputLast1" placeholder="CustomerId">
         <span asp-validation-for="reservation.CustomerId"></span>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputLast1">Reservation date</label>
+        <input asp-for="reservation.ReservationDate" type="text" class="form-control" id="exampleInputLast1" placeholder="ReservationDate">
+        <span asp-validation-for="reservation.ReservationDate"></span>
     </div>
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>

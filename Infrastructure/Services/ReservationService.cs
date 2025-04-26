@@ -19,14 +19,13 @@ public class ReservationService(DataContext context, IMapper mapper) : IReservat
             return new Response<GetReservationDTO>(HttpStatusCode.NotFound, "Table not found");
         if (table.IsReserved)
             return new Response<GetReservationDTO>(HttpStatusCode.BadRequest, "Table is reserved");
+        table.IsReserved = true;    
 
         var customer = await context.Customers.FindAsync(createReservation.CustomerId);
         if (customer == null)
             return new Response<GetReservationDTO>(HttpStatusCode.NotFound, "Customer not found");
 
         var reservation = mapper.Map<Reservation>(createReservation);
-
-        reservation.ReservationDate = DateTime.UtcNow;
 
         await context.Reservations.AddAsync(reservation);
         var result = await context.SaveChangesAsync();

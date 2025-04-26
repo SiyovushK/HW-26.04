@@ -3,6 +3,7 @@ using Domain.DTOs.ReservationDTOs;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Npgsql.Replication;
 
 namespace RazorPages.Pages.Reservations;
 
@@ -14,6 +15,12 @@ public class Create(IReservationService reservationService) : PageModel
     [BindProperty]
     public List<string> Messages { get; set; } = new();
 
+    public async Task<IActionResult> OnGetAsync(int tableId)
+    {
+        reservation.TableId = tableId;
+        return Page();
+    }
+
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
@@ -22,10 +29,12 @@ public class Create(IReservationService reservationService) : PageModel
             return Page();
         }
 
+        reservation.ReservationDate = reservation.ReservationDate.ToUniversalTime();
+
         var response = await reservationService.CreateAsync(reservation);
         if (response.IsSuccess)
         {
-            return Redirect("/Tables/Get");
+            return Redirect("/Reservations/Get");
         }
 
         Messages.Add(response.Message);

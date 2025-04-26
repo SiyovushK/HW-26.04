@@ -17,7 +17,7 @@ public class Get(IReservationService reservationService) : PageModel
     public async Task OnGetAsync()
     {
         var result = await reservationService.GetAllAsync();
-        if (!ModelState.IsValid)
+        if (!result.IsSuccess)
         {
             Messages.Add(result.Message);
             return;
