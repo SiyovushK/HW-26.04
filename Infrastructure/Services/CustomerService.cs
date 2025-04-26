@@ -22,9 +22,9 @@ public class CustomerService(DataContext context, IMapper mapper) : ICustomerSer
 
         return getCustomerDTO == null
             ? new Response<GetCustomerDTO>(HttpStatusCode.InternalServerError, "Customer couldn't be added")
-            : new Response<GetCustomerDTO>(getCustomerDTO);
+            : new Response<GetCustomerDTO>(getCustomerDTO);  
     }
-
+  
     public async Task<Response<GetCustomerDTO>> UpdateAsync(int CustomerId, UpdateCustomerDTO updateCustomer)
     {
         var info = await context.Customers.FindAsync(CustomerId);
