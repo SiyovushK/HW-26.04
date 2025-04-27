@@ -8,6 +8,7 @@
         <th scope="col">TableId</th>
         <th scope="col">CustomerId</th>
         <th scope="col">Reservation Date</th>
+        <th scope="col">Action</th>
     </tr>
     </thead>
     <tbody>
@@ -21,6 +22,11 @@
             <td>@res.TableId</td>
             <td>@res.CustomerId</td>
             <td>@res.ReservationDate</td>
+            <td>
+                <form method="post" asp-page-handler="Post" asp-route-ReservationId="@res.Id">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
         </tr>
     }
     </tbody>

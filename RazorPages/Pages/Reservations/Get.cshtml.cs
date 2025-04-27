@@ -25,4 +25,16 @@ public class Get(IReservationService reservationService) : PageModel
 
         getReservation = result.Data!;
     }
+
+    public async Task<IActionResult> OnPostAsync(int ReservationId)
+    {
+        var result = await reservationService.DeleteAsync(ReservationId);
+        if (!result.IsSuccess)
+        {
+            Messages.Add(result.Message);
+            return Page();
+        }
+
+        return RedirectToPage();
+    }
 }

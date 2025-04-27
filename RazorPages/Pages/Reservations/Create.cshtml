@@ -13,10 +13,23 @@
         <span asp-validation-for="reservation.CustomerId"></span>
     </div>
     <div class="form-group">
-        <label for="exampleInputLast1">Reservation date</label>
-        <input asp-for="reservation.ReservationDate" type="text" class="form-control" id="exampleInputLast1" placeholder="ReservationDate">
+        <label for="reservationDate">Reservation Date</label>
+        <input asp-for="reservation.ReservationDate"
+            type="datetime-local"
+            class="form-control"
+            value="@(Model.reservation.ReservationDate.ToString("yyyy-MM-ddTHH:mm"))"
+            min="@(DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm"))"
+            max="@(DateTime.UtcNow.AddMonths(1).ToString("yyyy-MM-ddTHH:mm"))"
+            id="reservationDate" />
         <span asp-validation-for="reservation.ReservationDate"></span>
     </div>
+
+    <script>
+        document.getElementById('reservationDate').addEventListener('keydown', function(e) {
+            e.preventDefault();
+        });
+    </script>
+
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
