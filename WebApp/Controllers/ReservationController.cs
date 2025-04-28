@@ -41,7 +41,7 @@ public class ReservationController(IReservationService reservationService) : Con
     }
     
     [HttpGet("Filter")]
-    public async Task<Response<List<GetReservationDTO>>> GetFilteredAsync([FromQuery] ReservationFilters filter)
+    public async Task<PagedResponse<List<GetReservationDTO>>> GetFilteredAsync([FromQuery] ReservationFilters filter)
     {
         return await reservationService.GetFilteredAsync(filter);
     }

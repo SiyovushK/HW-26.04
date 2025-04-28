@@ -124,7 +124,7 @@ public class ReservationService(DataContext context, IMapper mapper) : IReservat
             : new Response<List<GetReservationDTO>>(getReservationsDTO);
     }
 
-    public async Task<Response<List<GetReservationDTO>>> GetFilteredAsync(ReservationFilters filter)
+    public async Task<PagedResponse<List<GetReservationDTO>>> GetFilteredAsync(ReservationFilters filter)
     {
         var pageNumber = filter.PageNumber <= 0 ? 1 : filter.PageNumber;
         var pageSize = filter.PageSize < 10 ? 10 : filter.PageSize;
@@ -134,19 +134,21 @@ public class ReservationService(DataContext context, IMapper mapper) : IReservat
         if (filter.TableId != null)
         {
             reservationsQuery = reservationsQuery
-                .Where(r => r.TableId >= filter.TableId);
+                .Where(r => r.TableId == filter.TableId);
         }        
 
         if (filter.ReservationDateFrom != null)
         {
+            var dateFrom = filter.ReservationDateFrom.Value.Date.ToUniversalTime();
             reservationsQuery = reservationsQuery
-                .Where(r => r.ReservationDate >= filter.ReservationDateFrom);
+                .Where(r => r.ReservationDate >= dateFrom);
         }        
 
         if (filter.ReservationDateTo != null)
         {
+            var dateTo = filter.ReservationDateTo.Value.Date.AddDays(1).ToUniversalTime();
             reservationsQuery = reservationsQuery
-                .Where(r => r.ReservationDate <= filter.ReservationDateTo);
+                .Where(r => r.ReservationDate < dateTo);
         }
 
         var totalRecords = await reservationsQuery.CountAsync();    

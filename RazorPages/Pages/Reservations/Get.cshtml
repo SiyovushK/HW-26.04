@@ -1,6 +1,38 @@
 @page
 @model RazorPages.Pages.Reservations.Get
 
+<h2>All Reservations</h2>
+
+<form method="get">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="TableId">TableId</label>
+            <input name="TableId" class="form-control" id="TableId" placeholder="TableId" type="number" value="@Model.Filters.TableId">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="ReservationDateFrom">Reservation Date From</label>
+            <input name="ReservationDateFrom" class="form-control" type="date" 
+                value="@(Model.Filters.ReservationDateFrom?.ToLocalTime().ToString("yyyy-MM-dd"))">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="ReservationDateTo">Reservation Date To</label>
+            <input name="ReservationDateTo" class="form-control" type="date" 
+                value="@(Model.Filters.ReservationDateTo?.ToLocalTime().ToString("yyyy-MM-dd"))">
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+    </div>
+</form>
+
+<div style="text-align: center">
+    @foreach (var message in Model.Messages)
+    {
+        <p>@message</p>
+    }
+</div>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -15,7 +47,7 @@
     @{
         var count = 1;
     }
-    @foreach (var res in Model.getReservation)
+    @foreach (var res in Model.Reservations)
     {
         <tr>
             <th scope="row">@(count++)</th>
@@ -23,11 +55,29 @@
             <td>@res.CustomerId</td>
             <td>@res.ReservationDate</td>
             <td>
-                <form method="post" asp-page-handler="Post" asp-route-ReservationId="@res.Id">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                <form method="post" asp-page-handler="Post" asp-route-reservationId="@res.Id">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger btn-sm" 
+                            onclick="return confirm('Are you sure you want to delete this reservation?')">
+                        Delete
+                    </button>
                 </form>
             </td>
         </tr>
     }
     </tbody>
 </table>
+
+<div class="pagination">
+    <ul class="pagination">
+        <li class="page-item @(Model.Filters.PageNumber <= 1 ? "disabled" : "")">
+            <a class="page-link" href="?PageNumber=@(Model.Filters.PageNumber - 1)&PageSize=@Model.Filters.PageSize&TableId=@Model.Filters.TableId&ReservationDateFrom=@(Model.Filters.ReservationDateFrom?.ToString("yyyy-MM-dd"))&ReservationDateTo=@(Model.Filters.ReservationDateTo?.ToString("yyyy-MM-dd"))">Previous</a>
+        </li>
+        <li class="page-item">
+            <span class="page-link">Page @Model.Filters.PageNumber</span>
+        </li>
+        <li class="page-item @(Model.Reservations.Count < Model.Filters.PageSize ? "disabled" : "")">
+            <a class="page-link" href="?PageNumber=@(Model.Filters.PageNumber + 1)&PageSize=@Model.Filters.PageSize&TableId=@Model.Filters.TableId&ReservationDateFrom=@(Model.Filters.ReservationDateFrom?.ToString("yyyy-MM-dd"))&ReservationDateTo=@(Model.Filters.ReservationDateTo?.ToString("yyyy-MM-dd"))">Next</a>
+        </li>
+    </ul>
+</div>

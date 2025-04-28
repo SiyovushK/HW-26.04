@@ -18,6 +18,7 @@ public class Create(IReservationService reservationService) : PageModel
     public async Task<IActionResult> OnGetAsync(int tableId)
     {
         reservation.TableId = tableId;
+        reservation.ReservationDate = DateTime.UtcNow.AddHours(1);
         return Page();
     }
 
@@ -29,7 +30,10 @@ public class Create(IReservationService reservationService) : PageModel
             return Page();
         }
 
-        reservation.ReservationDate = reservation.ReservationDate.ToUniversalTime();
+        if (reservation.ReservationDate.Kind != DateTimeKind.Utc)
+        {
+            reservation.ReservationDate = reservation.ReservationDate.ToUniversalTime();
+        }
 
         var response = await reservationService.CreateAsync(reservation);
         if (response.IsSuccess)

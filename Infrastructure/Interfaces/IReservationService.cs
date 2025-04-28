@@ -11,5 +11,5 @@ public interface IReservationService
     Task<Response<string>> DeleteAsync(int reservationId);
     Task<Response<GetReservationDTO>> GetByIdAsync(int ReservationId);
     Task<Response<List<GetReservationDTO>>> GetAllAsync();
-    Task<Response<List<GetReservationDTO>>> GetFilteredAsync(ReservationFilters filter);
+    Task<PagedResponse<List<GetReservationDTO>>> GetFilteredAsync(ReservationFilters filter);
 }
